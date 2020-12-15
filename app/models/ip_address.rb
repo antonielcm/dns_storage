@@ -6,11 +6,15 @@ class IpAddress < ApplicationRecord
 
     validate :ip_must_have_ipv4_format
 
+    def as_json(_)
+      super(only: [:id, :ip])
+    end
+
     private
 
     def ip_must_have_ipv4_format
       if (IPAddr.new(ip) rescue nil).nil?
-        errors.add(:ip, "must have ipv4 format")
+        errors.add(:ip, "must have a valid format")
       end
     end
 end

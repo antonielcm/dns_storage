@@ -1,7 +1,19 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+ip_address = IpAddress.new(ip: "1.1.1.1")
+ip_address.domain_names = [create(:domain_name, name: "lorem.com"), DomainName.find_or_initialize_by(name: "ipsum.com"), DomainName.find_or_initialize_by(name: "dolor.com"), DomainName.find_or_initialize_by(name: "amet.com")]
+ip_address.save!
+
+ip_address = IpAddress.new(ip: "2.2.2.2")
+ip_address.domain_names = [DomainName.find_or_initialize_by(name: "ipsum.com")]
+ip_address.save!
+
+ip_address = IpAddress.new(ip: "3.3.3.3")
+ip_address.domain_names = [DomainName.find_or_initialize_by(name: "ipsum.com"), DomainName.find_or_initialize_by(name: "dolor.com"), DomainName.find_or_initialize_by(name: "amet.com")]
+ip_address.save!
+
+ip_address = IpAddress.new(ip: "4.4.4.4")
+ip_address.domain_names = [DomainName.find_or_initialize_by(name: "ipsum.com"), DomainName.find_or_initialize_by(name: "dolor.com"), DomainName.find_or_initialize_by(name: "sit.com"), DomainName.find_or_initialize_by(name: "amet.com")]
+ip_address.save!
+
+ip_address = IpAddress.new(ip: "5.5.5.5")
+ip_address.domain_names = [DomainName.find_or_initialize_by(name: "dolor.com"), DomainName.find_or_initialize_by(name: "sit.com")]
+ip_address.save!

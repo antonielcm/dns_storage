@@ -1,18 +1,23 @@
 class Api::V1::DnsRecordsController < ApplicationController
 
     def create
-        @response = DnsRecordServices::CreateDnsRecordService.new(params).call()
+      @result = DnsRecordServices::CreateDnsRecordService.new(params).call()
 
-        render_json @response
+      render json: @result.body, status: @result.success? ? 201 : 422
+    end
+
+    def index
+      @result = DnsRecordServices::FilterDnsRecordsService.new(params[:included], params[:excluded]).call()
+
+      @pagy, @records = pagy(@result.records, items: 10)
+
+      render json: {total_records: @pagy.count, records: @records, related_domain_names: @result.related_domain_names}
     end
 
     private
 
-    def render_json(response)
-      render json: response.body, status: response.success? ? 201 : 422
-    end
-
     def dns_record_params
-        params.require(:dns_records).permit(:ip, domain_names_attributes: [:name])
+      params.require(:dns_records).permit(:ip, domain_names_attributes: [:name])
     end
 end
+
